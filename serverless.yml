@@ -1,0 +1,17 @@
+service: serverless-guru
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+  # - serverless-dynamodb-local
+
+functions:
+  hello:
+    handler: src/handlers.hello
+    events:
+      - http:
+          path: /
+          method: get
