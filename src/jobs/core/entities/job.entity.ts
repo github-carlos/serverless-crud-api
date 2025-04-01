@@ -11,6 +11,7 @@ export const CompanySchema = z.object({
 });
 
 export const JobFieldsSchema = z.object({
+  id: z.string().optional(),
   title: z.string().min(3),
   description: z.string().min(10).optional(),
   sallary: SallarySchema,
@@ -39,6 +40,7 @@ export class Job {
 
   toDTO() {
     return {
+      id: this.id,
       title: this.title,
       description: this.description,
       seniority: this.seniority,
@@ -47,6 +49,15 @@ export class Job {
       isConfidential: this.isConfidential,
       company: this.isConfidential ? 'Confidential' : this.company
     }
+  }
+
+  get id(): string | undefined {
+    return this.fields.id;
+  }
+
+  set id(id: string) {
+    this.fields.id = id;
+    this.validate();
   }
 
   get title(): string {
