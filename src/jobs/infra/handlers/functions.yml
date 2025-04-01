@@ -1,0 +1,30 @@
+- name: list
+  handler: src/application/handlers.hello
+  events:
+    - http:
+        path: /jobs
+        method: get
+- name: create
+  handler: src/application/handlers.hello
+  events:
+    - http:
+        path: /jobs
+        method: post
+- name: update
+  handler: src/application/handlers.hello
+  events:
+    - http:
+        path: /jobs/:id
+        method: put
+- name: patch
+  handler: src/application/handlers.hello
+  events:
+    - http:
+        path: /jobs/:id
+        method: patch
+- name: delete
+  handler: src/application/handlers.hello
+  events:
+    - http:
+        path: /jobs/:id
+        method: delete

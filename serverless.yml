@@ -9,33 +9,4 @@ plugins:
   # - serverless-dynamodb-local
 
 functions:
-  list:
-    handler: src/handlers.hello
-    events:
-      - http:
-          path: /jobs
-          method: get
-  create:
-    handler: src/handlers.hello
-    events:
-      - http:
-          path: /jobs
-          method: post
-  update:
-    handler: src/handlers.hello
-    events:
-      - http:
-          path: /jobs/:id
-          method: put
-  patch:
-    handler: src/handlers.hello
-    events:
-      - http:
-          path: /jobs/:id
-          method: patch
-  delete:
-    handler: src/handlers.hello
-    events:
-      - http:
-          path: /jobs/:id
-          method: delete
+- ${file(./src/jobs/infra/handlers/functions.yml)}
