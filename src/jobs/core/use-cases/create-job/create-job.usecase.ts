@@ -4,9 +4,7 @@ import { UseCase } from "../use-case.interface";
 
 export type CreateJobInput = {}
 
-export type CreateJobOutput = {}
-
-export class CreateJobUseCase implements UseCase<CreateJobInput, CreateJobOutput> {
+export class CreateJobUseCase implements UseCase<CreateJobInput, void> {
 
   constructor(private jobRepository: JobRepository) { }
 

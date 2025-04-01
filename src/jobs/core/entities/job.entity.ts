@@ -1,27 +1,114 @@
-export enum SenioritiesEnum {
-  JUNIOR = 'JUNIOR',
-  MID_LEVEL = 'MID_LEVEL',
-  SENIOR = 'SENIOR'
-}
-export enum JobStatusEnum {
-  ACTIVE = 'ACTIVE',
-  INACTIVE = 'INACTIVE'
-}
+import { z } from 'zod';
+import { Sallary, SallarySchema } from '../value-objects/sallary.value-object';
 
-export type JobFields = {
-  title: string;
-  description?: string;
-  seniority: SenioritiesEnum;
-  requirements: [string];
-  status: JobStatusEnum;
-  isConfidential: boolean;
-  company?: {
-    name: string;
-    address: string;
-    phone: string;
-  }
-}
+export const SenioritiesEnum = z.enum(["JUNIOR", "MID_LEVEL", "SENIOR"]);
+export const JobStatusEnum = z.enum(["ACTIVE", "INACTIVE"]);
+
+export const CompanySchema = z.object({
+  name: z.string(),
+  address: z.string(),
+  phone: z.string(),
+});
+
+export const JobFieldsSchema = z.object({
+  title: z.string().min(3),
+  description: z.string().min(10).optional(),
+  sallary: SallarySchema,
+  seniority: SenioritiesEnum,
+  status: JobStatusEnum.default("ACTIVE"),
+  isConfidential: z.boolean().default(false),
+  company: CompanySchema.optional(),
+});
+
+export type Company = z.infer<typeof CompanySchema>;
+export type JobFields = z.infer<typeof JobFieldsSchema>;
 
 export class Job {
-  constructor(private fields: JobFields) { }
+
+  constructor(private fields: JobFields) {
+    this.validate();
+  }
+
+  validate() {
+    const zodValidation = JobFieldsSchema.safeParse(this.fields)
+
+    if (!zodValidation.success) {
+      throw "Invalid Job fields";
+    }
+  }
+
+  toDTO() {
+    return {
+      title: this.title,
+      description: this.description,
+      seniority: this.seniority,
+      status: this.status,
+      sallary: this.sallary,
+      isConfidential: this.isConfidential,
+      company: this.isConfidential ? 'Confidential' : this.company
+    }
+  }
+
+  get title(): string {
+    return this.fields.title;
+  }
+
+  set title(title: string) {
+    this.fields.title = title;
+    this.validate();
+  }
+
+  get sallary(): string {
+    return `${this.fields.sallary.currency} ${this.fields.sallary.value}`
+  }
+
+  set sallary(sallary: Sallary) {
+    this.fields.sallary = sallary;
+    this.validate();
+  }
+
+  get description(): string | undefined {
+    return this.fields.description;
+  }
+
+  set description(description: string) {
+    this.fields.description = description;
+    this.validate();
+  }
+
+  get seniority(): z.infer<typeof SenioritiesEnum> {
+    return this.fields.seniority;
+  }
+
+  set seniority(seniority: z.infer<typeof SenioritiesEnum>) {
+    this.fields.seniority = seniority;
+    this.validate();
+  }
+
+  get status(): z.infer<typeof JobStatusEnum> {
+    return this.fields.status;
+  }
+
+  set status(status: z.infer<typeof JobStatusEnum>) {
+    this.fields.status = status;
+    this.validate();
+  }
+
+  get isConfidential(): boolean {
+    return this.fields.isConfidential;
+  }
+
+  set isConfidential(isConfidential: boolean) {
+    this.fields.isConfidential = isConfidential;
+    this.validate();
+  }
+
+  get company(): Company | undefined {
+    return this.fields.company;
+  }
+
+  set company(company: Company | undefined) {
+    this.fields.company = company;
+    this.validate();
+  }
 }
