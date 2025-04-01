@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z, ZodSchema } from 'zod';
 import { Sallary, SallarySchema } from '../value-objects/sallary.value-object';
 
 export const SenioritiesEnum = z.enum(["JUNIOR", "MID_LEVEL", "SENIOR"]);
@@ -21,17 +21,22 @@ export const JobFieldsSchema = z.object({
   company: CompanySchema.optional(),
 });
 
+export const CreateJobFieldsSchema = JobFieldsSchema.omit({ id: true })
+
 export type Company = z.infer<typeof CompanySchema>;
 export type JobFields = z.infer<typeof JobFieldsSchema>;
 
 export class Job {
 
   constructor(private fields: JobFields) {
-    this.validate();
+    this.validate(CreateJobFieldsSchema);
   }
 
-  validate() {
-    const zodValidation = JobFieldsSchema.safeParse(this.fields)
+  validate(schema?: ZodSchema) {
+
+    schema = schema ?? JobFieldsSchema;
+
+    const zodValidation = schema.safeParse(this.fields)
 
     if (!zodValidation.success) {
       throw "Invalid Job fields";
