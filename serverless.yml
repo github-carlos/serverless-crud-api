@@ -9,4 +9,4 @@ plugins:
   # - serverless-dynamodb-local
 
 functions:
-- ${file(./src/jobs/infra/handlers/functions.yml)}
+- ${file(./src/jobs/application/handlers/functions.yml)}
