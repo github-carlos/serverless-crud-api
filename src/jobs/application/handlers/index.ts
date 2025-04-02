@@ -1,28 +1,11 @@
 import { APIGatewayEvent } from "aws-lambda";
 import { createJobsController } from "../../infra/factories/jobs.factory";
-import { ClientSideError } from "../../../shared/errors/client-side/client-side.error";
 import { CreateJobDTO } from "../../data/use-cases/create-job/create-job.usecase";
 import { JobDTO } from "../../core/entities/job.entity";
+import { handleError } from "./error-handler";
+import { extractBody, extractPathParams } from "./utils";
 
 const jobsController = createJobsController();
-
-function extractBody(event: APIGatewayEvent) {
-  const body = event.body ?? '';
-  return JSON.parse(body);
-}
-
-function extractPathParams(event: APIGatewayEvent) {
-  const params = event.pathParameters || {};
-  return params;
-}
-
-function handleError(error: unknown) {
-  if (error instanceof ClientSideError) {
-    return { statusCode: 400, body: JSON.stringify({ errorMessage: error.message, error: error.errors }) }
-  }
-  console.log(error)
-  return { statusCode: 500, body: JSON.stringify({ errorMessage: 'Internal Server Error' }) }
-}
 
 export async function create(event: APIGatewayEvent) {
   try {
