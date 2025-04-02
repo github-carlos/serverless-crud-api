@@ -2,6 +2,7 @@ import { APIGatewayEvent } from "aws-lambda";
 import { createJobsController } from "../../infra/factories/jobs.factory";
 import { ClientSideError } from "../../../shared/errors/client-side/client-side.error";
 import { CreateJobDTO } from "../../data/use-cases/create-job/create-job.usecase";
+import { JobDTO } from "../../core/entities/job.entity";
 
 const jobsController = createJobsController();
 
@@ -40,10 +41,24 @@ export async function list() {
   try {
     const jobs = await jobsController.list()
 
-    console.log('Found jobs', jobs)
     return Promise.resolve({
       statusCode: 200,
       body: JSON.stringify(jobs)
+    });
+  } catch (err) {
+    return handleError(err)
+  }
+}
+
+export async function updateJob(event: APIGatewayEvent) {
+  try {
+    const { id } = extractPathParams(event) as { id: string };
+    const data = extractBody(event) as Partial<JobDTO>;
+
+    await jobsController.updateJob({ id, data });
+
+    return Promise.resolve({
+      statusCode: 204
     });
   } catch (err) {
     return handleError(err)

@@ -2,7 +2,7 @@ import { z } from "zod";
 import { Job, JobFieldsSchema } from "../../../core/entities/job.entity";
 import { JobRepository } from "../../../core/repositories/job.repository";
 import { UseCase } from "../use-case.interface";
-import { InvalidFieldsError } from "../../../../shared/errors/client-side/invalid_fields.error";
+import { InvalidFieldsError } from "../../../../shared/errors/client-side/invalid-fields.error";
 
 export const CreateJobFieldsSchema = JobFieldsSchema.omit({ id: true })
 export type CreateJobDTO = z.infer<typeof CreateJobFieldsSchema>

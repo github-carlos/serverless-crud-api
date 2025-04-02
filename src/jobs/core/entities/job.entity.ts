@@ -1,6 +1,6 @@
 import { z, ZodSchema } from 'zod';
 import { Sallary, SallarySchema } from '../value-objects/sallary.value-object';
-import { InvalidFieldsError } from '../../../shared/errors/client-side/invalid_fields.error';
+import { InvalidFieldsError } from '../../../shared/errors/client-side/invalid-fields.error';
 import { v4 } from 'uuid';
 import { CompanyDTO, CompanySchema } from '../value-objects/company.value-object';
 

@@ -3,6 +3,8 @@ import { Job } from "../../../core/entities/job.entity";
 import { JobRepository } from "../../../core/repositories/job.repository";
 import { JobItem, JobModel } from "./schemas/job.schema";
 import { JobEntityMapper } from "./job-entity.mapper";
+import { Condition } from "dynamoose/dist/Condition";
+import { InvalidIdError } from "../../../../shared/errors/client-side/invalid-id.error";
 
 export class DynamoDBJobRepository implements JobRepository {
 
@@ -22,9 +24,18 @@ export class DynamoDBJobRepository implements JobRepository {
     return items;
   }
 
-  async update(job: Partial<Job>): Promise<void> {
-    console.log('job', job)
-    throw new Error("Method not implemented.");
+  async update(id: string, job: Partial<Job>): Promise<void> {
+    try {
+      await this.model.update({ id }, job, { condition: new Condition().where('id').exists() });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+
+      if (err.name === 'ConditionalCheckFailedException') {
+        throw new InvalidIdError(id)
+      }
+
+      throw Error('Database Error');
+    }
   }
 
   async delete(jobId: string): Promise<void> {
