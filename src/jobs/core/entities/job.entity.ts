@@ -1,5 +1,7 @@
 import { z, ZodSchema } from 'zod';
 import { Sallary, SallarySchema } from '../value-objects/sallary.value-object';
+import { InvalidFieldsError } from '../../../shared/errors/client-side/invalid_fields.error';
+import { v4 } from 'uuid';
 
 export const SenioritiesEnum = z.enum(["JUNIOR", "MID_LEVEL", "SENIOR"]);
 export const JobStatusEnum = z.enum(["ACTIVE", "INACTIVE"]);
@@ -21,7 +23,6 @@ export const JobFieldsSchema = z.object({
   company: CompanySchema.optional(),
 });
 
-export const CreateJobFieldsSchema = JobFieldsSchema.omit({ id: true })
 
 export type Company = z.infer<typeof CompanySchema>;
 export type JobFields = z.infer<typeof JobFieldsSchema>;
@@ -29,7 +30,11 @@ export type JobFields = z.infer<typeof JobFieldsSchema>;
 export class Job {
 
   constructor(private fields: JobFields) {
-    this.validate(CreateJobFieldsSchema);
+    this.validate();
+
+    if (!this.fields.id) {
+      this.fields.id = v4();
+    }
   }
 
   validate(schema?: ZodSchema) {
@@ -39,7 +44,7 @@ export class Job {
     const zodValidation = schema.safeParse(this.fields)
 
     if (!zodValidation.success) {
-      throw "Invalid Job fields";
+      throw new InvalidFieldsError(zodValidation.error.toString());
     }
   }
 
@@ -74,8 +79,8 @@ export class Job {
     this.validate();
   }
 
-  get sallary(): string {
-    return `${this.fields.sallary.currency} ${this.fields.sallary.value}`
+  get sallary(): z.infer<typeof SallarySchema> {
+    return this.fields.sallary;
   }
 
   set sallary(sallary: Sallary) {

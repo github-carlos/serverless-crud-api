@@ -13,7 +13,7 @@ export class DynamoDBJobRepository implements JobRepository {
   }
 
   async create(job: Job): Promise<void> {
-    await this.model.create(job)
+    await this.model.create(job.toDTO());
   }
   async list(): Promise<Job[]> {
     const items = await this.model.query().exec()

@@ -6,7 +6,47 @@ provider:
 plugins:
   - serverless-plugin-typescript
   - serverless-offline
-  # - serverless-dynamodb-local
+  - serverless-dynamodb-local
+
+custom:
+  dynamodb:
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
+    installPath: .dynamodb
+    stages:
+      - dev
+      - local
+
+resources:
+  Resources:
+    JobTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: JobTable
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        GlobalSecondaryIndexes:
+          - IndexName: SeniorityIndex
+            KeySchema:
+              - AttributeName: seniority
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+          - IndexName: StatusIndex
+            KeySchema:
+              - AttributeName: status
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
 
 functions:
 - ${file(./src/jobs/application/handlers/functions.yml)}

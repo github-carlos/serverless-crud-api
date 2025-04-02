@@ -1,16 +1,33 @@
-import { APIGatewayProxyResultV2, Context } from "aws-lambda";
+import { APIGatewayEvent } from "aws-lambda";
 import { createJobsController } from "../../infra/factories/jobs.factory";
+import { ClientSideError } from "../../../shared/errors/client-side/client-side.error";
+import { CreateJobDTO } from "../../data/use-cases/create-job/create-job.usecase";
+import { UseCase } from "../../data/use-cases/use-case.interface";
 
 const jobsController = createJobsController();
 
-export async function create(event: APIGatewayProxyResultV2, context: Context) {
-  console.log('EVENT', event);
-  console.log('Context', context);
+function extractBody(event: APIGatewayEvent) {
+  const body = event.body ?? '';
+  return JSON.parse(body);
+}
 
-  await jobsController.create({ title: 'teste' } as any)
+function handleError(error: unknown) {
+  if (error instanceof ClientSideError) {
+    return { statusCode: 400, body: JSON.stringify({ errorMessage: error.message, error: error.errors }) }
+  }
+  console.log(error)
+  return { statusCode: 500, body: JSON.stringify({ errorMessage: 'Internal Server Error' }) }
+}
 
-  return Promise.resolve({
-    statusCode: 201,
-    body: JSON.stringify({ teste: 'Hello World' }),
-  });
+export async function create(event: APIGatewayEvent) {
+  try {
+    const body = extractBody(event) as CreateJobDTO;
+    await jobsController.create(body)
+
+    return Promise.resolve({
+      statusCode: 201,
+    });
+  } catch (err) {
+    handleError(err)
+  }
 }
