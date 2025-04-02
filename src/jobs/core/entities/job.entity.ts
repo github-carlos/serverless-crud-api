@@ -47,7 +47,7 @@ export class Job {
     return {
       id: this.id ?? '',
       title: this.title,
-      description: this.description ?? '',
+      description: this.description,
       seniority: this.seniority,
       status: this.status,
       sallary: this.sallary,
