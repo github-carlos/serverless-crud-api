@@ -30,3 +30,17 @@ export async function create(event: APIGatewayEvent) {
     return handleError(err)
   }
 }
+
+export async function list() {
+  try {
+    const jobs = await jobsController.list()
+
+    console.log('Found jobs', jobs)
+    return Promise.resolve({
+      statusCode: 200,
+      body: JSON.stringify(jobs)
+    });
+  } catch (err) {
+    return handleError(err)
+  }
+}

@@ -2,15 +2,11 @@ import { z, ZodSchema } from 'zod';
 import { Sallary, SallarySchema } from '../value-objects/sallary.value-object';
 import { InvalidFieldsError } from '../../../shared/errors/client-side/invalid_fields.error';
 import { v4 } from 'uuid';
+import { CompanyDTO, CompanySchema } from '../value-objects/company.value-object';
 
 export const SenioritiesEnum = z.enum(["JUNIOR", "MID_LEVEL", "SENIOR"]);
 export const JobStatusEnum = z.enum(["ACTIVE", "INACTIVE"]);
 
-export const CompanySchema = z.object({
-  name: z.string(),
-  address: z.string(),
-  phone: z.string(),
-});
 
 export const JobFieldsSchema = z.object({
   id: z.string().optional(),
@@ -24,12 +20,11 @@ export const JobFieldsSchema = z.object({
 }).strict();
 
 
-export type Company = z.infer<typeof CompanySchema>;
-export type JobFields = z.infer<typeof JobFieldsSchema>;
+export type JobDTO = z.infer<typeof JobFieldsSchema>;
 
 export class Job {
 
-  constructor(private fields: JobFields) {
+  constructor(private fields: JobDTO) {
     this.validate();
 
     if (!this.fields.id) {
@@ -50,14 +45,14 @@ export class Job {
 
   toDTO() {
     return {
-      id: this.id,
+      id: this.id ?? '',
       title: this.title,
-      description: this.description,
+      description: this.description ?? '',
       seniority: this.seniority,
       status: this.status,
       sallary: this.sallary,
       isConfidential: this.isConfidential,
-      company: this.isConfidential ? 'Confidential' : this.company
+      company: this.isConfidential ? undefined : this.company
     }
   }
 
@@ -124,11 +119,11 @@ export class Job {
     this.validate();
   }
 
-  get company(): Company | undefined {
+  get company(): CompanyDTO | undefined {
     return this.fields.company;
   }
 
-  set company(company: Company | undefined) {
+  set company(company: CompanyDTO | undefined) {
     this.fields.company = company;
     this.validate();
   }

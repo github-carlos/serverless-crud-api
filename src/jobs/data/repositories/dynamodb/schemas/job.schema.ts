@@ -1,5 +1,9 @@
 import dynamoose from "dynamoose";
 import { JobStatusEnum, SenioritiesEnum } from "../../../../core/entities/job.entity";
+import { Item } from "dynamoose/dist/Item";
+import { SallaryDTO } from "../../../../core/value-objects/sallary.value-object";
+import { z } from "zod";
+import { CompanyDTO } from "../../../../core/value-objects/company.value-object";
 
 const SallarySchema = new dynamoose.Schema(
   {
@@ -46,7 +50,17 @@ const JobSchema = new dynamoose.Schema(
   { timestamps: true }
 );
 
+export class JobItem extends Item {
+  id!: string;
+  title!: string;
+  description!: string;
+  sallary!: SallaryDTO;
+  seniority!: z.infer<typeof SenioritiesEnum>;
+  status!: z.infer<typeof JobStatusEnum>;
+  company!: CompanyDTO;
+  isConfidential!: boolean;
+};
 
-const JobModel = dynamoose.model("Job", JobSchema);
+const JobModel = dynamoose.model<JobItem>("Job", JobSchema);
 
 export { JobModel, JobSchema };

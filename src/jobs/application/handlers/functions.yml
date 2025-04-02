@@ -1,9 +1,9 @@
-# - name: list
-#   handler: src/application/handlers.hello
-#   events:
-#     - http:
-#         path: /jobs
-#         method: get
+- name: list
+  handler: src/jobs/application/handlers/index.list
+  events:
+    - http:
+        path: /jobs
+        method: get
 - name: create
   handler: src/jobs/application/handlers/index.create
   events:
