@@ -2,7 +2,6 @@ import { APIGatewayEvent } from "aws-lambda";
 import { createJobsController } from "../../infra/factories/jobs.factory";
 import { ClientSideError } from "../../../shared/errors/client-side/client-side.error";
 import { CreateJobDTO } from "../../data/use-cases/create-job/create-job.usecase";
-import { UseCase } from "../../data/use-cases/use-case.interface";
 
 const jobsController = createJobsController();
 
@@ -28,6 +27,6 @@ export async function create(event: APIGatewayEvent) {
       statusCode: 201,
     });
   } catch (err) {
-    handleError(err)
+    return handleError(err)
   }
 }

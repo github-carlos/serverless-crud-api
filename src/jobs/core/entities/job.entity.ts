@@ -21,7 +21,7 @@ export const JobFieldsSchema = z.object({
   status: JobStatusEnum.default("ACTIVE"),
   isConfidential: z.boolean().default(false),
   company: CompanySchema.optional(),
-});
+}).strict();
 
 
 export type Company = z.infer<typeof CompanySchema>;
