@@ -22,9 +22,10 @@
 #     - http:
 #         path: /jobs/:id
 #         method: patch
-# - name: delete
-#   handler: src/application/handlers.hello
-#   events:
-#     - http:
-#         path: /jobs/:id
-#         method: delete
+
+- name: delete
+  handler: src/jobs/application/handlers/index.deleteJob
+  events:
+    - http:
+        path: /jobs/{id}
+        method: delete

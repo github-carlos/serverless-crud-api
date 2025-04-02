@@ -10,6 +10,11 @@ function extractBody(event: APIGatewayEvent) {
   return JSON.parse(body);
 }
 
+function extractPathParams(event: APIGatewayEvent) {
+  const params = event.pathParameters || {};
+  return params;
+}
+
 function handleError(error: unknown) {
   if (error instanceof ClientSideError) {
     return { statusCode: 400, body: JSON.stringify({ errorMessage: error.message, error: error.errors }) }
@@ -39,6 +44,20 @@ export async function list() {
     return Promise.resolve({
       statusCode: 200,
       body: JSON.stringify(jobs)
+    });
+  } catch (err) {
+    return handleError(err)
+  }
+}
+
+export async function deleteJob(event: APIGatewayEvent) {
+  try {
+    const { id } = extractPathParams(event) as { id: string };
+
+    await jobsController.delete(id)
+
+    return Promise.resolve({
+      statusCode: 204
     });
   } catch (err) {
     return handleError(err)

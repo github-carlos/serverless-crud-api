@@ -22,13 +22,16 @@ export class DynamoDBJobRepository implements JobRepository {
     return items;
   }
 
-  update(job: Partial<Job>): Promise<void> {
+  async update(job: Partial<Job>): Promise<void> {
     console.log('job', job)
     throw new Error("Method not implemented.");
   }
 
-  delete(jobId: string): Promise<void> {
-    console.log('job', jobId)
-    throw new Error("Method not implemented.");
+  async delete(jobId: string): Promise<void> {
+    try {
+      await this.model.delete(jobId);
+    } catch (err) {
+      console.log("err", err);
+    }
   }
 }
