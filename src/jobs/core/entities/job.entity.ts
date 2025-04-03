@@ -45,14 +45,14 @@ export class Job {
 
   toDTO() {
     return {
-      id: this.id ?? '',
+      id: this.id,
       title: this.title,
       description: this.description,
       seniority: this.seniority,
       status: this.status,
       sallary: this.sallary,
       isConfidential: this.isConfidential,
-      company: this.isConfidential ? undefined : this.company
+      company: this.company
     }
   }
 
@@ -60,7 +60,7 @@ export class Job {
     return this.fields.id;
   }
 
-  set id(id: string) {
+  set id(id: string | undefined) {
     this.fields.id = id;
     this.validate();
   }

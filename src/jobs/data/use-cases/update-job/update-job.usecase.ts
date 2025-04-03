@@ -1,4 +1,4 @@
-import { Job, JobDTO } from "../../../core/entities/job.entity";
+import { JobDTO } from "../../../core/entities/job.entity";
 import { JobRepository } from "../../../core/repositories/job.repository";
 import { UseCase } from "../use-case.interface";
 

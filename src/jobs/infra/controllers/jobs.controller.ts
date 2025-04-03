@@ -1,8 +1,12 @@
-import { CreateJobDTO, CreateJobUseCase } from "../../data/use-cases/create-job/create-job.usecase";
-import { DeleteJobUseCase } from "../../data/use-cases/delete-job/delete-job.usecase";
-import { GetJobUseCase } from "../../data/use-cases/get-job/get-job.usecase";
-import { ListJobsUseCase } from "../../data/use-cases/list-jobs/list-jobs.usecase";
-import { UpdateJobInput, UpdateJobUseCase } from "../../data/use-cases/update-job/update-job.usecase";
+import {
+  CreateJobDTO,
+  CreateJobUseCase,
+  DeleteJobUseCase,
+  GetJobUseCase,
+  ListJobsUseCase,
+  UpdateJobInput,
+  UpdateJobUseCase
+} from "../../data/use-cases";
 
 export class JobsController {
   constructor(
