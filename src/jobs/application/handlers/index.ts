@@ -12,11 +12,24 @@ export async function create(event: APIGatewayEvent) {
     const body = extractBody(event) as CreateJobDTO;
     await jobsController.create(body)
 
-    return Promise.resolve({
+    return {
       statusCode: 201,
-    });
+    };
   } catch (err) {
     return handleError(err)
+  }
+}
+
+export async function getJob(event: APIGatewayEvent) {
+  try {
+    const { id } = extractPathParams(event) as { id: string };
+    const job = await jobsController.getJob(id);
+    return {
+      statusCode: 200,
+      body: JSON.stringify(job)
+    }
+  } catch (err) {
+    return handleError(err);
   }
 }
 

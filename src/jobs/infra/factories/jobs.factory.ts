@@ -2,6 +2,7 @@ import { DynamoDBJobRepository } from "../../data/repositories/dynamodb/job-dyna
 import { setupDynamoDB } from "../../data/repositories/dynamodb/setup";
 import { CreateJobUseCase } from "../../data/use-cases/create-job/create-job.usecase";
 import { DeleteJobUseCase } from "../../data/use-cases/delete-job/delete-job.usecase";
+import { GetJobUseCase } from "../../data/use-cases/get-job/get-job.usecase";
 import { ListJobsUseCase } from "../../data/use-cases/list-jobs/list-jobs.usecase";
 import { UpdateJobUseCase } from "../../data/use-cases/update-job/update-job.usecase";
 import { JobsController } from "../controllers/jobs.controller";
@@ -14,7 +15,8 @@ export function createJobsController(): JobsController {
   const listJobsUseCase = new ListJobsUseCase(jobsRepository);
   const deleteJobUseCase = new DeleteJobUseCase(jobsRepository);
   const updateJobUseCase = new UpdateJobUseCase(jobsRepository);
-  const jobsController = new JobsController(createJobUseCase, listJobsUseCase, deleteJobUseCase, updateJobUseCase);
+  const getJobUseCase = new GetJobUseCase(jobsRepository);
+  const jobsController = new JobsController(createJobUseCase, listJobsUseCase, deleteJobUseCase, updateJobUseCase, getJobUseCase);
 
   return jobsController;
 }

@@ -5,4 +5,5 @@ export interface JobRepository {
   list(): Promise<Job[]>;
   update(jodId: string, job: Partial<Job>): Promise<void>;
   delete(jobId: string): Promise<void>;
+  findOne(jobId: string): Promise<Job | null>;
 }

@@ -18,6 +18,16 @@ export class DynamoDBJobRepository implements JobRepository {
     await this.model.create(job.toDTO());
   }
 
+  async findOne(id: string): Promise<Job | null> {
+    const foundJob = await this.model.query({ id }).exec();
+
+    if (!foundJob.length) {
+      return null;
+    }
+
+    return JobEntityMapper.toEntity(foundJob[0]);
+  }
+
   async list(): Promise<Job[]> {
     const queriedItems = await this.model.scan().exec()
     const items = queriedItems.map(JobEntityMapper.toEntity);

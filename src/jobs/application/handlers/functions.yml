@@ -4,6 +4,14 @@
     - http:
         path: /jobs
         method: get
+
+- name: getJob
+  handler: src/jobs/application/handlers/index.getJob
+  events:
+    - http:
+        path: /jobs/{id}
+        method: get
+
 - name: create
   handler: src/jobs/application/handlers/index.create
   events:
