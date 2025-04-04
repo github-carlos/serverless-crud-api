@@ -1,7 +1,7 @@
-import { ClientSideError } from "./client-side.error";
+import { ClientSideError } from './client-side.error'
 
 export class InvalidFieldsError extends ClientSideError {
   constructor(message: string) {
-    super(message, 'InvalidFieldsError');
+    super(message, 'InvalidFieldsError')
   }
 }

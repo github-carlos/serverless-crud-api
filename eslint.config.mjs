@@ -5,8 +5,14 @@ import tseslint from "typescript-eslint";
 
 
 export default defineConfig([
-  { files: ["**/*.{js,mjs,cjs,ts}"] },
-  { files: ["**/*.{js,mjs,cjs,ts}"], languageOptions: { globals: globals.browser } },
-  { files: ["**/*.{js,mjs,cjs,ts}"], plugins: { js }, extends: ["js/recommended"] },
   tseslint.configs.recommended,
+  { files: ["src/**/*.ts"] },
+  { files: ["src/**/*.ts"], languageOptions: { globals: globals.browser } },
+  { files: ["src/**/*.ts"], plugins: { js }, rules: { "@typescript-eslint/no-explicit-any": "warn" } },
+  {
+    files: ["**/*.spec.ts"], // match spec files anywhere
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+    },
+  },
 ]);

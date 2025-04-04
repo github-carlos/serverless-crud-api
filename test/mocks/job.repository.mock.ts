@@ -1,4 +1,4 @@
-import { vi } from "vitest";
+import { vi } from 'vitest'
 
 export function JobRepositoryMock() {
   return {
@@ -6,6 +6,6 @@ export function JobRepositoryMock() {
     list: vi.fn(),
     update: vi.fn(),
     delete: vi.fn(),
-    findOne: vi.fn()
+    findOne: vi.fn(),
   }
 }

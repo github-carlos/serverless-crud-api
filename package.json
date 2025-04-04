@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start:sls": "sls offline",
-    "lint": "eslint --ext .js,.ts .",
+    "lint": "eslint",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
     "tests:unit": "npx vitest"
   },
@@ -13,6 +13,7 @@
   "devDependencies": {
     "@eslint/js": "^9.23.0",
     "@faker-js/faker": "^9.6.0",
+    "@testcontainers/localstack": "^10.24.0",
     "@types/aws-lambda": "^8.10.148",
     "@typescript-eslint/eslint-plugin": "^8.29.0",
     "@typescript-eslint/parser": "^8.29.0",

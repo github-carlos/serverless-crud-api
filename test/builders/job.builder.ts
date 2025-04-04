@@ -1,8 +1,8 @@
-import { Job } from '../../src/jobs/core/entities/job.entity';
-import { faker } from '@faker-js/faker';
+import { Job } from '../../src/jobs/core/entities/job.entity'
+import { faker } from '@faker-js/faker'
 
 export class JobBuilder {
-  private job: Job | undefined;
+  private job: Job | undefined
 
   random() {
     this.job = new Job({
@@ -12,29 +12,29 @@ export class JobBuilder {
       isConfidential: faker.helpers.arrayElement([true, false]),
       sallary: {
         currency: 'USD',
-        value: faker.number.int()
+        value: faker.number.int(),
       },
-      seniority: faker.helpers.arrayElement(["JUNIOR", "MID_LEVEL", "SENIOR"]),
-      status: faker.helpers.arrayElement(["ACTIVE", "INACTIVE"]),
+      seniority: faker.helpers.arrayElement(['JUNIOR', 'MID_LEVEL', 'SENIOR']),
+      status: faker.helpers.arrayElement(['ACTIVE', 'INACTIVE']),
       company: {
         address: faker.location.streetAddress(),
         name: faker.company.name(),
-        phone: faker.phone.number()
-      }
-    });
-    return this;
+        phone: faker.phone.number(),
+      },
+    })
+    return this
   }
 
   withoutId() {
     if (!this.job) {
-      this.job = this.build();
+      this.job = this.build()
     }
 
-    this.job.id = undefined;
-    return this;
+    this.job.id = undefined
+    return this
   }
 
   build(): Job {
-    return this.job || this.random().build();
+    return this.job || this.random().build()
   }
 }

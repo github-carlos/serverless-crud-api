@@ -1,11 +1,11 @@
-import { APIGatewayEvent } from "aws-lambda";
+import { APIGatewayEvent } from 'aws-lambda'
 
 export function extractBody(event: APIGatewayEvent) {
-  const body = event.body ?? '';
-  return JSON.parse(body);
+  const body = event.body ?? ''
+  return JSON.parse(body)
 }
 
 export function extractPathParams(event: APIGatewayEvent) {
-  const params = event.pathParameters || {};
-  return params;
+  const params = event.pathParameters || {}
+  return params
 }
