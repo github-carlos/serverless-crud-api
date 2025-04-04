@@ -11,6 +11,6 @@ export class ListJobsUseCase implements UseCase<undefined, ListJobsUseCaseOuput>
   async execute(): ListJobsUseCaseOuput {
     const jobs = await this.jobsRepository.list();
 
-    return jobs.map(job => job.toDTO());
+    return jobs?.map(job => job.toDTO()) || [];
   }
 }

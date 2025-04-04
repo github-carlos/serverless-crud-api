@@ -4,8 +4,9 @@ import { JobBuilder } from '../../../../../test/builders/job.builder';
 import { CreateJobUseCase } from "./create-job.usecase";
 import { InvalidFieldsError } from "../../../../shared/errors/client-side/invalid-fields.error";
 
+const repository = JobRepositoryMock()
 // system under test
-const sut = new CreateJobUseCase(JobRepositoryMock)
+const sut = new CreateJobUseCase(repository)
 
 describe('#CreateJobUseCase', () => {
 
@@ -16,7 +17,7 @@ describe('#CreateJobUseCase', () => {
     delete jobDTO.id;
     await sut.execute(jobDTO);
 
-    expect(JobRepositoryMock.create).toBeCalledTimes(1);
+    expect(repository.create).toBeCalledTimes(1);
   });
 
   it('should throw InvalidFieldsError when there are invalid fields', async () => {

@@ -4,25 +4,26 @@ import { JobBuilder } from '../../../../../test/builders/job.builder';
 import { GetJobUseCase } from "./get-job.usecase";
 import { JobNotFoundError } from "../../errors/job-not-found.error";
 
+const repository = JobRepositoryMock()
 // system under test
-const sut = new GetJobUseCase(JobRepositoryMock)
+const sut = new GetJobUseCase(repository)
 
 describe('#GetJobUseCase', () => {
 
   it('should return a Job when id exists', async () => {
     const job = new JobBuilder().random().build();
-    JobRepositoryMock.findOne.mockResolvedValueOnce(job)
+    repository.findOne.mockResolvedValueOnce(job)
 
     const foundJob = await sut.execute(job.id!);
 
-    expect(JobRepositoryMock.findOne).toBeCalledWith(job.id);
-    expect(JobRepositoryMock.findOne).toBeCalledTimes(1);
+    expect(repository.findOne).toBeCalledWith(job.id);
+    expect(repository.findOne).toBeCalledTimes(1);
     expect(foundJob.id).equal(job.id);
   });
 
   it('shoudl throw JobNotFoundError when Job does not exists', async () => {
 
-    JobRepositoryMock.findOne.mockResolvedValueOnce(undefined);
+    repository.findOne.mockResolvedValueOnce(undefined);
 
     await expect(sut.execute('invalid_uuid')).rejects.toThrowError(JobNotFoundError);
   })
