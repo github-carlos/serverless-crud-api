@@ -31,6 +31,9 @@ custom:
     stages:
       - dev
       - local
+  serverless-offline:
+    port: 3003
+    httpPort: 3004
 
 resources:
   - ${file(iac/dynamodb-tables.yml)}
