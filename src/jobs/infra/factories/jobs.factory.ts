@@ -10,7 +10,7 @@ import { JobsController } from "../controllers/jobs.controller";
 
 setupDynamoDB();
 
-export function createJobsController(jobsRepository: JobRepository): JobsController {
+export function createJobsController(jobsRepository?: JobRepository): JobsController {
   jobsRepository = jobsRepository ?? new DynamoDBJobRepository();
   const createJobUseCase = new CreateJobUseCase(jobsRepository)
   const listJobsUseCase = new ListJobsUseCase(jobsRepository);

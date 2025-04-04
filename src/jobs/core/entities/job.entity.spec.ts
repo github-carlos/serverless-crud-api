@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { Job, JobFieldsSchema } from "./job.entity";
 import { JobBuilder } from "../../../../test/builders/job.builder";
 import { InvalidFieldsError } from "../../../shared/errors/client-side/invalid-fields.error";
+import { Job, JobFieldsSchema } from "./job.entity";
 
 describe('#JobEntity', () => {
   describe('Validation Rules', () => {
