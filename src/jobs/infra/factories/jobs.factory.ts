@@ -1,4 +1,3 @@
-import { isTestEnv } from "../../../shared/utils";
 import { JobRepository } from "../../core/repositories/job.repository";
 import { DynamoDBJobRepository } from "../../data/repositories/dynamodb/job-dynamodb.repository";
 import { setupDynamoDB } from "../../data/repositories/dynamodb/setup";

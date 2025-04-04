@@ -33,14 +33,15 @@ export class Job {
   }
 
   validate(schema?: ZodSchema) {
-
     schema = schema ?? JobFieldsSchema;
 
-    const zodValidation = schema.safeParse(this.fields)
+    const zodValidation = schema.safeParse(this.fields);
 
     if (!zodValidation.success) {
       throw new InvalidFieldsError(zodValidation.error.toString());
     }
+
+    this.fields = zodValidation.data;
   }
 
   toDTO() {
