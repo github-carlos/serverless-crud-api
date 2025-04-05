@@ -2,7 +2,7 @@
   "name": "serverless-guru",
   "version": "1.0.0",
   "scripts": {
-    "start:sls": "NODE_ENV=local && sls offline",
+    "start:sls": "NODE_ENV=local && sls offline --stage local",
     "lint": "eslint",
     "format:write": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
     "format": "prettier --ignore-path .gitignore --check \"**/*.+(js|ts|json)\"",

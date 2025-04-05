@@ -7,6 +7,7 @@ import { Item } from 'dynamoose/dist/Item'
 import { SallaryDTO } from '../../../../core/value-objects/sallary.value-object'
 import { z } from 'zod'
 import { CompanyDTO } from '../../../../core/value-objects/company.value-object'
+import { isLocalEnv } from '../../../../../shared/utils'
 
 const SallarySchema = new dynamoose.Schema(
   {
@@ -64,10 +65,12 @@ export class JobItem extends Item {
   isConfidential!: boolean
 }
 
+const options = isLocalEnv ? {} : { create: false, waitForActive: false };
+
 const JobModel = dynamoose.model<JobItem>(
   `Job_${process.env.NODE_ENV}`,
   JobSchema,
-  { create: false, waitForActive: false },
+  options
 )
 
 export { JobModel, JobSchema }
