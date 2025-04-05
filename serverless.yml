@@ -15,7 +15,7 @@ provider:
         - dynamodb:Scan
         - dynamodb:Query
       Resource:
-        - arn:aws:dynamodb:${self:provider.region}:*:table/JobTable-${self:provider.stage}
+        - arn:aws:dynamodb:${self:provider.region}:*:table/Job_${self:provider.stage}
 
 plugins:
   - serverless-plugin-typescript

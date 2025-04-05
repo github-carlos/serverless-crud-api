@@ -64,6 +64,6 @@ export class JobItem extends Item {
   isConfidential!: boolean
 }
 
-const JobModel = dynamoose.model<JobItem>('Job', JobSchema)
+const JobModel = dynamoose.model<JobItem>(`Job_${process.env.NODE_ENV}`, JobSchema)
 
 export { JobModel, JobSchema }

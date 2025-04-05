@@ -2,13 +2,13 @@
   "name": "serverless-guru",
   "version": "1.0.0",
   "scripts": {
-    "start:sls": "sls offline",
+    "start:sls": "NODE_ENV=local && sls offline",
     "lint": "eslint",
     "format:write": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
     "format": "prettier --ignore-path .gitignore \"**/*.+(js|ts|json)\"",
     "tests:unit": "npx vitest",
-    "deploy:prod": "sls deploy --stage prod",
-    "deploy:dev": "sls deploy --stage dev"
+    "deploy:prod": "NODE_ENV=prod && sls deploy --stage prod",
+    "deploy:dev": "NODE_ENV=dev && sls deploy --stage dev"
   },
   "author": "",
   "license": "ISC",
