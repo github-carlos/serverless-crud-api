@@ -42,7 +42,7 @@ jobs:
       - name: Deploy to Serverless
         run: |
           if [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            sls deploy --stage prod
+            npm run deploy:prod
           elif [ "${{ github.ref }}" == "refs/heads/dev" ]; then
-            sls deploy --stage dev
+            npm run deploy:dev
           fi

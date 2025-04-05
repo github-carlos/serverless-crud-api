@@ -6,7 +6,9 @@
     "lint": "eslint",
     "format:write": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
     "format": "prettier --ignore-path .gitignore \"**/*.+(js|ts|json)\"",
-    "tests:unit": "npx vitest"
+    "tests:unit": "npx vitest",
+    "deploy:prod": "sls deploy --stage prod",
+    "deploy:dev": "sls deploy --stage dev"
   },
   "author": "",
   "license": "ISC",
