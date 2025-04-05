@@ -2,7 +2,7 @@ Resources:
   JobTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: JobTable-{sef:provider.stage}
+      TableName: JobTable-{sef:provider.stage, 'dev'}
       AttributeDefinitions:
         - AttributeName: id
           AttributeType: S
@@ -10,18 +10,3 @@ Resources:
         - AttributeName: id
           KeyType: HASH
       BillingMode: PAY_PER_REQUEST
-      GlobalSecondaryIndexes:
-        - IndexName: SeniorityIndex
-          KeySchema:
-            - AttributeName: seniority
-              KeyType: HASH
-          Projection:
-            ProjectionType: ALL
-        - IndexName: StatusIndex
-          KeySchema:
-            - AttributeName: status
-              KeyType: HASH
-          Projection:
-            ProjectionType: ALL
-      StreamSpecification:
-        StreamViewType: NEW_AND_OLD_IMAGES
