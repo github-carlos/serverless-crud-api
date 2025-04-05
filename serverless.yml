@@ -5,6 +5,8 @@ provider:
   runtime: nodejs20.x
   region: us-east-1
   stage: ${opt:stage, 'dev'}
+  environment:
+    NODE_ENV: ${self:provider.stage}
   iamRoleStatements:
     - Effect: Allow
       Action:
