@@ -1,32 +1,28 @@
-- name: list
+list:
   handler: src/jobs/application/handlers/index.list
   events:
     - http:
         path: /jobs
         method: get
-
-- name: getJob
+getJob:
   handler: src/jobs/application/handlers/index.getJob
   events:
     - http:
         path: /jobs/{id}
         method: get
-
-- name: create
-  handler: src/jobs/application/handlers/index.create
-  events:
-    - http:
-        path: /jobs
-        method: post
-
-- name: update
-  handler: src/jobs/application/handlers/index.updateJob
-  events:
-    - http:
-        path: /jobs/{id}
-        method: put
-
-- name: delete
+create:
+ handler: src/jobs/application/handlers/index.create
+ events:
+   - http:
+       path: /jobs
+       method: post
+updateJob:
+    handler: src/jobs/application/handlers/index.updateJob
+    events:
+      - http:
+            path: /jobs/{id}
+            method: put
+delete:
   handler: src/jobs/application/handlers/index.deleteJob
   events:
     - http:
