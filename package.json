@@ -4,7 +4,8 @@
   "scripts": {
     "start:sls": "sls offline",
     "lint": "eslint",
-    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
+    "format:write": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
+    "format": "prettier --ignore-path .gitignore \"**/*.+(js|ts|json)\"",
     "tests:unit": "npx vitest"
   },
   "author": "",
