@@ -3,7 +3,7 @@ name: Deploy Serverless
 on:
   push:
     branches:
-      - master
+      - main
       - dev
 
 jobs:
