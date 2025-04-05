@@ -2,7 +2,7 @@ Resources:
   JobTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: JobTable-{sef:provider.stage, 'dev'}
+      TableName: JobTable_{sef:provider.stage, 'dev'}
       AttributeDefinitions:
         - AttributeName: id
           AttributeType: S
